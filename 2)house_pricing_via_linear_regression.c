@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include<math.h>
 
 // Function prototype for training linear regression model
 void train_model(float x[], float y[], int m);
@@ -44,6 +45,8 @@ void train_model(float x[], float y[], int m)
     // Initialize parameters:
     // w = slope, b = intercept
     float w = 1, b = 0; 
+    float prev_cost = 1000;  
+    float tolerance = 0.000001;
 
     // Array to store predictions for each training example
     float y_hat[m];
@@ -85,6 +88,13 @@ void train_model(float x[], float y[], int m)
 
         // Print iteration number and cost value
         printf("%d %f\n", k, cost_fun);
+        if (fabs(prev_cost - cost_fun) < tolerance)
+{
+    printf("Training converged at iteration %d\n", k);
+    break;
+}
+
+prev_cost = cost_fun;
     }
 
     // Open gnuplot process for plotting results
